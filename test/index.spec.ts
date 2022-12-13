@@ -1,10 +1,19 @@
-import { logger } from "@/index";
+import { nodelogger, browserlogger } from "@/index";
 
-describe("logger test", () => {
+describe("node logger test", () => {
   it("output", () => {
     const log = jest.spyOn(console, "log").mockReturnValue();
-    logger();
-    expect(log).toHaveBeenNthCalledWith(1, "hello, world!");
+    nodelogger.info("test", "something here");
+    expect(log).toHaveBeenNthCalledWith(1, "test");
+    log.mockRestore();
+  });
+});
+
+describe("browser logger test", () => {
+  it("output", () => {
+    const log = jest.spyOn(console, "log").mockReturnValue();
+    browserlogger.info("test", "something here");
+    expect(log).toHaveBeenNthCalledWith(1, "test");
     log.mockRestore();
   });
 });

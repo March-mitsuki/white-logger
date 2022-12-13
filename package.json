@@ -8,10 +8,13 @@
   "files": [
     "./lib"
   ],
+  "engines": {
+    "node": ">=14"
+  },
   "scripts": {
     "test": "jest",
     "build": "rm -rf ./lib && npm run build:cjs & npm run build:esm",
-    "build:cjs": "tsc",
+    "build:cjs": "tsc -p ./tsconfig.cjs.json",
     "build:esm": "tsc -p ./tsconfig.esm.json"
   },
   "repository": {
@@ -23,8 +26,8 @@
     "browser",
     "node"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "mitsuki",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/March-mitsuki/zerologger/issues"
   },

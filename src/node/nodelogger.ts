@@ -2,25 +2,13 @@ import { writeFile } from "fs/promises";
 import { DateTime } from "luxon";
 import path from "path";
 
-import { ansiFont, ansiBack } from "../utils/ansicode";
+import { ansiFont, ansiBack } from "@/utils/ansicode";
+import { replacer } from "@/utils/replacer";
 
 type LogLevel = "err" | "warn" | "info" | "nomal";
 type LoggerMode = "all" | "console" | "write";
 
 const logDateFmt = "yyyy'-'LL'-'dd HH'-'mm'-'ss Z";
-
-const replacer = () => {
-  const seen = new WeakSet();
-  return (_: unknown, v: unknown) => {
-    if (typeof v === "object" && v != null) {
-      if (seen.has(v)) {
-        return;
-      }
-      seen.add(v);
-    }
-    return v;
-  };
-};
 
 const logger = (backColor: ansiBack, level: LogLevel) => {
   return (prefix: string, filename: string, mode: LoggerMode, ...msgs: unknown[]) => {

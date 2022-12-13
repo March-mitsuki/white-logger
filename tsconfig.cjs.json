@@ -1,10 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "module": "ESNext",
-    "outDir": "./lib/esm",
-    "declaration": true,
-    "declarationMap": true
+    "module": "CommonJS"
   },
   "include": ["./src/**/*"],
   "exclude": ["**/node_modules/**", "./jest.config.ts", "./test/**/*"]

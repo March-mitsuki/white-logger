@@ -1,5 +1,2 @@
-export function logger() {
-  console.log("hello, world!");
-}
-
-logger();
+export * as nodelogger from "./node/nodelogger";
+export * as browserlogger from "./browser/browserlogger";
