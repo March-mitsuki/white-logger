@@ -1,3 +1,3 @@
 export type ZerologgerConfig = {
-  logPath: string;
+  logPath?: string;
 };
