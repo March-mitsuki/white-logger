@@ -1,8 +1,10 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "module": "CommonJS"
+    "module": "CommonJS",
+    "declaration": true,
+    "declarationMap": true
   },
   "include": ["./src/**/*"],
-  "exclude": ["**/node_modules/**", "./jest.config.ts", "./__test__/**/*", "./vite.config.ts"]
+  "exclude": ["**/node_modules/**", "./__test__/**/*", "./vite.config.ts"]
 }
