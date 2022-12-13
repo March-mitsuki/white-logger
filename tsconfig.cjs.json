@@ -4,5 +4,5 @@
     "module": "CommonJS"
   },
   "include": ["./src/**/*"],
-  "exclude": ["**/node_modules/**", "./jest.config.ts", "./__test__/**/*"]
+  "exclude": ["**/node_modules/**", "./jest.config.ts", "./__test__/**/*", "./vite.config.ts"]
 }
