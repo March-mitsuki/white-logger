@@ -13,6 +13,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["./src/**/*", "./jest.config.ts", "./test/**/*"],
+  "include": ["./src/**/*", "./jest.config.ts", "./__test__/**/*"],
   "exclude": ["**/node_modules/**"]
 }

@@ -3,7 +3,7 @@ import { Config } from "@jest/types";
 // オプションを設定
 const config: Config.InitialOptions = {
   preset: "ts-jest",
-  testMatch: ["<rootDir>/test/**/*.spec.ts"],
+  testMatch: ["<rootDir>/__tests__/**/*.spec.ts"],
   testEnvironment: "node",
   collectCoverage: true,
   moduleNameMapper: {

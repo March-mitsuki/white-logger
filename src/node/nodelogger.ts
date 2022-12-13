@@ -12,7 +12,6 @@ const logDateFmt = "yyyy'-'LL'-'dd HH'-'mm'-'ss Z";
 
 const logger = (backColor: ansiBack, level: LogLevel) => {
   return (prefix: string, filename: string, mode: LoggerMode, ...msgs: unknown[]) => {
-    // 判断第二个引数是否为path, 若不是则交给msgs作为普通信息处理
     let filePath = "";
     const testFilename = filename.match(/(.*\/.*\..*)\s?/);
     if (testFilename) {
