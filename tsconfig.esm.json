@@ -2,10 +2,9 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "module": "ESNext",
-    "outDir": "./lib/esm",
     "declaration": true,
     "declarationMap": true
   },
   "include": ["./src/**/*"],
-  "exclude": ["**/node_modules/**", "./__test__/**/*", "./vite.config.ts"]
+  "exclude": ["**/node_modules/**", "./__test__/**/*", "./vite.config.ts", "./src/node/**/*"]
 }

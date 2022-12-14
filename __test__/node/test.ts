@@ -1,4 +1,5 @@
-import { nodelogger, configLogger } from "@/index";
+// import { nodelogger, configLogger } from "@/node";
+import { nodelogger, configLogger } from "../../lib/node";
 
 configLogger({
   logPath: "__test__/output",
