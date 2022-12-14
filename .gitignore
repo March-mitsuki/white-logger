@@ -1,8 +1,5 @@
 node_modules/
 
-# ts build dir
-lib/
-
 # jest coverage
 coverage/
 
