@@ -2,11 +2,11 @@
   "name": "zerologger",
   "version": "0.1.0",
   "description": "a very simple browser and node logger with only one dependency",
-  "main": "./lib/index.js",
-  "module": "./lib/esm/index.js",
-  "types": "./lib/esm/index.d.ts",
+  "main": "lib/node/index.js",
+  "module": "lib/node/index.js",
+  "types": "lib/node/index.d.ts",
   "files": [
-    "./lib"
+    "lib"
   ],
   "engines": {
     "node": ">=14"
