@@ -8,10 +8,7 @@
     "types": ["node"],
     "outDir": "./lib",
     "noEmit": false,
-    "baseUrl": "./",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "baseUrl": "./"
   },
   "include": ["./src/**/*", "./__test__/**/*", "./vite.config.ts"],
   "exclude": ["**/node_modules/**"]

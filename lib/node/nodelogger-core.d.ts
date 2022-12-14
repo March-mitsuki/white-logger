@@ -1,4 +1,4 @@
-import { ZerologgerConfig } from "@/utils/types";
+import { ZerologgerConfig } from "../utils/types";
 type LoggerMode = "normal" | "console" | "write" | "string";
 export declare const configLogger: (config: Partial<ZerologgerConfig>) => void;
 export declare const _err: (prefix: string, filename: string, mode: LoggerMode, ...msgs: unknown[]) => string | void;

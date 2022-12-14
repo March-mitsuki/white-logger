@@ -1,4 +1,3 @@
-// import { browserlogger } from "@/browser";
 import { browserlogger } from "../../lib/browser";
 
 type AnyDict = { [key: string]: any }; // eslint-disable-line

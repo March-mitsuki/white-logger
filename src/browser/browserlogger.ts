@@ -1,4 +1,4 @@
-import { replacer } from "@/utils/replacer";
+import { replacer } from "../utils/replacer";
 
 const logger = (color: string) => {
   return (prefix: string, ...args: unknown[]) => {

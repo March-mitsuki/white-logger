@@ -2,9 +2,9 @@ import { writeFile } from "fs/promises";
 import { DateTime } from "luxon";
 import path from "path";
 
-import { ansiFont, ansiBack } from "@/utils/ansicode";
-import { replacer } from "@/utils/replacer";
-import { ZerologgerConfig } from "@/utils/types";
+import { ansiFont, ansiBack } from "../utils/ansicode";
+import { replacer } from "../utils/replacer";
+import { ZerologgerConfig } from "../utils/types";
 
 type LogLevel = "err" | "warn" | "info" | "nomal";
 type LoggerMode = "normal" | "console" | "write" | "string";
