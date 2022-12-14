@@ -1,11 +1,12 @@
 # zerologger
 
-A very simple nodejs and browser logger with only one dependency and native TypeScript and ESM.
+A very simple nodejs and browser logger with only one dependency.
 
 # feature
 
 - Only one dependency. Use [Luxon](https://moment.github.io/luxon/#/) for dealing with dates and times.
 - Pretty print.
+- Native TypeScript and ESM. (Surpported CommonJS)
 - Circular safe.
 
 # install

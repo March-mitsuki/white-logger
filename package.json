@@ -19,7 +19,7 @@
     "test:node": "ts-node -r tsconfig-paths/register ./__test__/node/test.ts",
     "fmt": "prettier --write ./src/**/*",
     "lint": "eslint ./src/**/*",
-    "cleanup": "rm -rf ./browser & rm -rf ./node & rm -rf ./utils",
+    "cleanup": "rm -rf ./browser & rm -rf ./node & rm -rf ./utils & rm -rf ./cjs",
     "build": "npm run cleanup && npm run build:cjs & npm run build:esm",
     "build:cjs": "tsc -p ./tsconfig.cjs.json",
     "build:esm": "tsc -p ./tsconfig.esm.json",
