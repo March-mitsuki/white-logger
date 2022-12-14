@@ -84,7 +84,9 @@ configLogger({
 ### use CommonJS
 
 ```javascript
-const { nodelogger } = require("zerologger/node");
+// The CommonJS supported is in cjs directory.
+// So plaese require this path:
+const { nodelogger } = require("zerologger/cjs/node");
 
 nodelogger.nomal("nomal-level", "normal reported.");
 ```
@@ -92,7 +94,7 @@ nodelogger.nomal("nomal-level", "normal reported.");
 You can also import with a name of your choice.
 
 ```javascript
-const mylogger = require("zerologger/node").nodelogger;
+const mylogger = require("zerologger/cjs/node").nodelogger;
 
 mylogger.nomal("nomal-level", "normal reported.");
 ```
