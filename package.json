@@ -9,7 +9,7 @@
     "browser",
     "node",
     "utils",
-    "cjs"
+    "esm"
   ],
   "engines": {
     "node": ">=14"
