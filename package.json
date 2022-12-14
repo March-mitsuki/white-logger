@@ -6,7 +6,9 @@
   "module": "lib/node/index.js",
   "types": "lib/node/index.d.ts",
   "files": [
-    "lib"
+    "browser",
+    "node",
+    "utils"
   ],
   "engines": {
     "node": ">=14"
@@ -16,9 +18,10 @@
     "test:node": "ts-node -r tsconfig-paths/register ./__test__/node/test.ts",
     "fmt": "prettier --write ./src/**/*",
     "lint": "eslint ./src/**/*",
-    "build": "rm -rf ./lib && npm run build:cjs & npm run build:esm",
-    "build:cjs": "tsc -p ./tsconfig.cjs.json",
-    "build:esm": "tsc -p ./tsconfig.esm.json",
+    "cleanup": "rm -rf ./browser & rm -rf ./node & rm -rf ./utils",
+    "build": "npm run cleanup && npm run build:node & npm run build:browser",
+    "build:node": "tsc -p ./tsconfig.node.json",
+    "build:browser": "tsc -p ./tsconfig.browser.json",
     "prepare": "husky install"
   },
   "repository": {
