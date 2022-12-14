@@ -1,4 +1,4 @@
-import { browserlogger } from "../../lib/browser";
+import { browserlogger as logger } from "../../browser";
 
 type AnyDict = { [key: string]: any }; // eslint-disable-line
 export const circularRef: AnyDict = {
@@ -16,8 +16,15 @@ export const dummyArray = [1, "a", { a: "a", b: "b" }];
 
 export const dummyNumber = 1234567890;
 
-browserlogger.nomal("circular", circularRef);
-browserlogger.info("info-test", dummyStr);
-browserlogger.warn("notice", dummyArray);
-browserlogger.warn("notice", "dummy array here:", dummyArray);
-browserlogger.err("oops", dummyNumber);
+logger.nomal("circular", circularRef);
+logger.info("info-test", dummyStr);
+logger.warn("notice", dummyArray);
+logger.warn("notice", "dummy array here:", dummyArray);
+logger.err("oops", dummyNumber);
+console.log("\n");
+logger.nomal("nomal-level", "normal reported.");
+logger.info("info here", "something reported.", {
+  hello: "world",
+});
+logger.warn("notice", "something warnning.", ["foo", "baz"]);
+logger.err("oops!", "something error!");
