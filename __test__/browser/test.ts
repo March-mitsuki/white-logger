@@ -21,10 +21,3 @@ logger.info("info-test", dummyStr);
 logger.warn("notice", dummyArray);
 logger.warn("notice", "dummy array here:", dummyArray);
 logger.err("oops", dummyNumber);
-console.log("\n");
-logger.nomal("nomal-level", "normal reported.");
-logger.info("info here", "something reported.", {
-  hello: "world",
-});
-logger.warn("notice", "something warnning.", ["foo", "baz"]);
-logger.err("oops!", "something error!");

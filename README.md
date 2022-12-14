@@ -1,4 +1,4 @@
-# zerologger
+# white-logger
 
 A very simple nodejs and browser logger with only one dependency.
 
@@ -6,13 +6,13 @@ A very simple nodejs and browser logger with only one dependency.
 
 - Only one dependency. Use [Luxon](https://moment.github.io/luxon/#/) for dealing with dates and times.
 - Pretty print.
-- Native TypeScript and ESM. (Surpported CommonJS)
+- Native TypeScript.
 - Circular safe.
 
 # install
 
 ```bash
-npm i zerologger
+npm i white-logger
 ```
 
 # useage
@@ -22,7 +22,7 @@ npm i zerologger
 ### use typescript or ESM
 
 ```typescript
-import { nodelogger as logger } from "zerologger/node";
+import { nodelogger as logger } from "white-logger/node";
 
 logger.nomal("nomal-level", "normal reported.");
 logger.info("info here", "something reported.", {
@@ -39,7 +39,7 @@ You will get like this in your console.
 You can also give `__filename` to the second parameter to get relative path output from your project root dir.
 
 ```typescript
-import { nodelogger as logger } from "zerologger/node";
+import { nodelogger as logger } from "white-logger/node";
 
 logger.info("some info", __filename, "i am here!");
 ```
@@ -48,13 +48,13 @@ And you will get like this. Easy to find out the problem, right?
 
 ![filename preview img](docs/assets/filename_preview.png)
 
-By default, zerologger does not write log to files. If you want to do this, please configure some setting like this.
+By default, white-logger does not write log to files. If you want to do this, please configure some setting like this.
 
 ```typescript
-import { nodelogger as logger, configLogger } from "zerologger/node";
+import { nodelogger as logger, configLogger } from "white-logger/node";
 import path from "path";
 
-// By setting the logPath option, zerologger will write the log to files automatically.
+// By setting the logPath option, white-logger will write the log to files automatically.
 configLogger({
   logPath: path.resolve(process.cwd(), "logs"),
 });
@@ -72,7 +72,7 @@ logger.info("some-info", "something reported.");
 
 Timestamp will change from day to day. So, the logs are output to a different file each day.
 
-You can also only pass a relative path, zerologger will resolve it to your project root directory automatically.
+You can also only pass a relative path, white-logger will resolve it to your project root directory automatically.
 
 ```typescript
 configLogger({
@@ -84,9 +84,7 @@ configLogger({
 ### use CommonJS
 
 ```javascript
-// The CommonJS supported is in cjs directory.
-// So plaese require this path:
-const { nodelogger } = require("zerologger/cjs/node");
+const { nodelogger } = require("white-logger/node");
 
 nodelogger.nomal("nomal-level", "normal reported.");
 ```
@@ -94,7 +92,7 @@ nodelogger.nomal("nomal-level", "normal reported.");
 You can also import with a name of your choice.
 
 ```javascript
-const mylogger = require("zerologger/cjs/node").nodelogger;
+const mylogger = require("white-logger/node").nodelogger;
 
 mylogger.nomal("nomal-level", "normal reported.");
 ```
@@ -103,10 +101,11 @@ mylogger.nomal("nomal-level", "normal reported.");
 
 ## browser
 
-You can use zerologger in any framework. Like vue or react.
+You can use white-logger in any framework. Like vue or react.
 
 ```javascript
-import { browserlogger as logger } from "zerologger/browser";
+// Please note that the esm module is in esm directory.
+import { browserlogger as logger } from "white-logger/esm/browser";
 
 logger.nomal("nomal-level", "normal reported.");
 logger.info("info here", "something reported.", {
@@ -123,14 +122,14 @@ Open your console and you can see the results.
 # configuration
 
 ```typescript
-export type ZerologgerConfig = {
+export type white-loggerConfig = {
   logPath: string | undefined; // full or relative path to your logs directory
   logDateFmt: string; // Luxon fmt string
   filenameDateFmt: string; // Luxon fmt string
 };
 
 // default value
-let __config__: ZerologgerConfig = {
+let __config__: white-loggerConfig = {
   logPath: undefined,
   logDateFmt: "yyyy'-'LL'-'dd HH'-'mm'-'ss Z",
   filenameDateFmt: "yyyy'-'LL'-'dd",
@@ -139,6 +138,12 @@ let __config__: ZerologgerConfig = {
 
 About Luxon fmt string, please see [this Luxon document](https://moment.github.io/luxon/#/formatting?id=table-of-tokens)
 
-- `logPath` The path of directory that zerologger will write log to.
+- `logPath` The path of directory that white-logger will write log to.
 - `logDateFmt` The format of the date being printed to the console.
 - `filenameDateFmt` The format of the date before being inserted into the output file.
+
+# Why is it call White logger?
+
+> "Any color you want, so long as it is Black."
+
+So, White logger.

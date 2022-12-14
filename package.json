@@ -1,5 +1,5 @@
 {
-  "name": "zerologger",
+  "name": "white-logger",
   "version": "0.1.0",
   "description": "a very simple browser and node logger with only one dependency",
   "main": "lib/node/index.js",
@@ -19,7 +19,7 @@
     "test:node": "ts-node -r tsconfig-paths/register ./__test__/node/test.ts",
     "fmt": "prettier --write ./src/**/*",
     "lint": "eslint ./src/**/*",
-    "cleanup": "rm -rf ./browser & rm -rf ./node & rm -rf ./utils & rm -rf ./cjs",
+    "cleanup": "rm -rf ./browser & rm -rf ./node & rm -rf ./utils & rm -rf ./cjs & rm -rf ./esm",
     "build": "npm run cleanup && npm run build:cjs & npm run build:esm",
     "build:cjs": "tsc -p ./tsconfig.cjs.json",
     "build:esm": "tsc -p ./tsconfig.esm.json",
@@ -27,19 +27,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/March-mitsuki/zerologger.git"
+    "url": "git+https://github.com/March-mitsuki/white-logger.git"
   },
   "keywords": [
     "logger",
     "browser",
-    "node"
+    "node",
+    "esm",
+    "typescript",
+    "javascript"
   ],
   "author": "mitsuki",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/March-mitsuki/zerologger/issues"
+    "url": "https://github.com/March-mitsuki/white-logger/issues"
   },
-  "homepage": "https://github.com/March-mitsuki/zerologger#readme",
+  "homepage": "https://github.com/March-mitsuki/white-logger#readme",
   "devDependencies": {
     "@types/luxon": "^3.1.0",
     "@types/node": "^18.11.13",

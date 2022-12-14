@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.replacer = void 0;
-const replacer = () => {
+export const replacer = () => {
     const seen = new WeakSet();
     return (_, v) => {
         if (typeof v === "object" && v != null) {
@@ -13,4 +10,3 @@ const replacer = () => {
         return v;
     };
 };
-exports.replacer = replacer;
