@@ -1,3 +1,5 @@
 export type ZerologgerConfig = {
-  logPath?: string;
+  logPath: string | undefined;
+  logDateFmt: string;
+  filenameDateFmt: string;
 };

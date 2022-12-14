@@ -7,21 +7,32 @@ import { replacer } from "@/utils/replacer";
 import { ZerologgerConfig } from "@/utils/types";
 
 type LogLevel = "err" | "warn" | "info" | "nomal";
-type LoggerMode = "all" | "console" | "write";
+type LoggerMode = "normal" | "console" | "write" | "string";
 
-const logDateFmt = "yyyy'-'LL'-'dd HH'-'mm'-'ss Z";
+let __config__: ZerologgerConfig = {
+  logPath: undefined,
+  logDateFmt: "yyyy'-'LL'-'dd HH'-'mm'-'ss Z",
+  filenameDateFmt: "yyyy'-'LL'-'dd",
+};
 
 const logger = (backColor: ansiBack, level: LogLevel) => {
-  return (prefix: string, filename: string, mode: LoggerMode, ...msgs: unknown[]) => {
+  return (
+    prefix: string,
+    filename: string,
+    mode: LoggerMode,
+    ...msgs: unknown[]
+  ): string | void => {
+    const { logPath, logDateFmt, filenameDateFmt } = __config__;
+
     let filePath = "";
-    const testFilename = filename.match(/(.*\/.*\..*)\s?/);
-    if (testFilename) {
-      filePath = path.relative(process.cwd(), testFilename[1]);
+    const filenameMatching = filename.match(/(.*\/.*\..*)\s?/);
+    if (filenameMatching) {
+      filePath = path.relative(process.cwd(), filenameMatching[1]);
     } else {
       msgs = [filename, ...msgs];
     }
 
-    const parsedmsgs = msgs
+    const parsedMsgs = msgs
       .map((elem) => {
         if (elem instanceof Object) {
           return JSON.stringify(elem, replacer(), 2);
@@ -33,56 +44,64 @@ const logger = (backColor: ansiBack, level: LogLevel) => {
       })
       .join(` `);
 
-    if (mode === "all" || mode === "console") {
-      console.log(
-        `${backColor} ${prefix} ${ansiFont.reset}` +
-          ` ${ansiFont.fontBold}${ansiFont.brightBlack}${DateTime.now().toFormat(logDateFmt)}${
-            ansiFont.reset
-          }` +
-          ` ${parsedmsgs}` +
-          ` ${ansiFont.underLine}${filePath}${ansiFont.reset}`,
-      );
+    const logDateStr = DateTime.now().toFormat(logDateFmt);
+    const coloredStr =
+      `${backColor} ${prefix} ${ansiFont.reset}` +
+      ` ${ansiFont.fontBold}${ansiFont.brightBlack}${logDateStr}${ansiFont.reset}` +
+      ` ${parsedMsgs}` +
+      ` ${ansiFont.underLine}${filePath}${ansiFont.reset}`;
+    const normalStr = `[${prefix}]-[${logDateStr}] ${parsedMsgs}\n`;
+
+    if (mode === "string") {
+      return normalStr;
     }
+    if (mode === "normal" || mode === "console") {
+      console.log(coloredStr);
+    }
+    if (mode === "normal" || mode === "write") {
+      if (logPath) {
+        const filenameDate = DateTime.now().toFormat(filenameDateFmt);
+        let logFilePath = `${filenameDate}.log`;
+        switch (level) {
+          case "err":
+            logFilePath = `${filenameDate}_err.log`;
+            break;
+          case "warn":
+            logFilePath = `${filenameDate}_warn.log`;
+            break;
+          case "nomal":
+            logFilePath = `${filenameDate}_nomal.log`;
+            break;
+          case "info":
+            logFilePath = `${filenameDate}_info.log`;
+            break;
+        }
 
-    if (mode === "all" || mode === "write") {
-      const configPath = path.resolve(process.cwd(), ".zerologgerrc.json");
-      import(configPath)
-        .then((config: ZerologgerConfig) => {
-          if (config.logPath) {
-            const filenameDate = DateTime.now().toFormat("yyyy'-'LL'-'dd");
-            let logFilePath = `${filenameDate}.log`;
-            switch (level) {
-              case "err":
-                logFilePath = `${filenameDate}_err.log`;
-                break;
-              case "warn":
-                logFilePath = `${filenameDate}_warn.log`;
-                break;
-              case "nomal":
-                logFilePath = `${filenameDate}_nomal.log`;
-                break;
-              case "info":
-                logFilePath = `${filenameDate}_info.log`;
-                break;
-            }
+        let writePath: string | undefined;
+        const fullPathReg = /^\//;
+        if (fullPathReg.test(logPath)) {
+          writePath = path.resolve(logPath, logFilePath);
+        } else {
+          writePath = path.resolve(process.cwd(), logPath, logFilePath);
+        }
 
-            const writeLogData = `[${prefix}]-[${DateTime.now().toFormat(
-              logDateFmt,
-            )}] ${parsedmsgs}\n`;
-
-            writeFile(path.resolve(process.cwd(), config.logPath, logFilePath), writeLogData, {
-              flag: "a",
-            }).catch((err) => {
-              console.log(`[${ansiFont.red}writeLogToFile${ansiFont.reset}]`, err);
-            });
-          }
-        })
-        .catch((err) => {
-          throw new Error(JSON.stringify(err));
+        writeFile(writePath, normalStr, {
+          flag: "a",
+        }).catch((err) => {
+          console.log(`[${ansiFont.red}writeLogToFile${ansiFont.reset}]`, err);
         });
+      }
     }
     return;
   };
+};
+
+export const configLogger = (config: Partial<ZerologgerConfig>) => {
+  __config__ = {
+    ...__config__,
+    ...config,
+  };
+  return;
 };
 
 export const _err = logger(ansiBack.red, "err");

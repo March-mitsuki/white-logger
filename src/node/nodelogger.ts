@@ -5,13 +5,14 @@ export function err(prefix: string, filename: string, ...args: unknown[]): void;
 export function err(...args: unknown[]) {
   const prefix = args[0] as string;
   if (args.length === 1) {
-    return _err(prefix, "", "all");
+    return _err(prefix, "", "normal");
   } else {
     const filename = args[1] as string;
     if (args.length === 2) {
-      return _err(prefix, filename, "all");
+      return _err(prefix, filename, "normal");
     } else {
-      return _err(prefix, filename, "all", args.slice(2));
+      const [...msgs] = args.slice(2);
+      return _err(prefix, filename, "normal", ...msgs);
     }
   }
 }
@@ -26,7 +27,8 @@ export function errWrite(...args: unknown[]) {
     if (args.length === 2) {
       return _err(prefix, filename, "write");
     } else {
-      return _err(prefix, filename, "write", args.slice(2));
+      const [...msgs] = args.slice(2);
+      return _err(prefix, filename, "write", ...msgs);
     }
   }
 }
@@ -41,7 +43,24 @@ export function errConsole(...args: unknown[]) {
     if (args.length === 2) {
       return _err(prefix, filename, "console");
     } else {
-      return _err(prefix, filename, "console", args.slice(2));
+      const [...msgs] = args.slice(2);
+      return _err(prefix, filename, "console", ...msgs);
+    }
+  }
+}
+export function sErr(prefix: string, filename: string, ...args: unknown[]): void;
+export function sErr(prefix: string, ...args: unknown[]): void;
+export function sErr(...args: unknown[]) {
+  const prefix = args[0] as string;
+  if (args.length === 1) {
+    return _err(prefix, "", "string");
+  } else {
+    const filename = args[1] as string;
+    if (args.length === 2) {
+      return _err(prefix, filename, "string");
+    } else {
+      const [...msgs] = args.slice(2);
+      return _err(prefix, filename, "string", ...msgs);
     }
   }
 }
@@ -51,14 +70,14 @@ export function warn(prefix: string, ...args: unknown[]): void;
 export function warn(...args: unknown[]) {
   const prefix = args[0] as string;
   if (args.length === 1) {
-    return _warn(prefix, "", "all");
+    return _warn(prefix, "", "normal");
   } else {
     const filename = args[1] as string;
-
     if (args.length === 2) {
-      return _warn(prefix, filename, "all");
+      return _warn(prefix, filename, "normal");
     } else {
-      return _warn(prefix, filename, "all", args.slice(2));
+      const [...msgs] = args.slice(2);
+      return _warn(prefix, filename, "normal", ...msgs);
     }
   }
 }
@@ -73,7 +92,8 @@ export function warnWrite(...args: unknown[]) {
     if (args.length === 2) {
       return _warn(prefix, filename, "write");
     } else {
-      return _warn(prefix, filename, "write", args.slice(2));
+      const [...msgs] = args.slice(2);
+      return _warn(prefix, filename, "write", ...msgs);
     }
   }
 }
@@ -88,7 +108,8 @@ export function warnConsole(...args: unknown[]) {
     if (args.length === 2) {
       return _warn(prefix, filename, "console");
     } else {
-      return _warn(prefix, filename, "console", args.slice(2));
+      const [...msgs] = args.slice(2);
+      return _warn(prefix, filename, "console", ...msgs);
     }
   }
 }
@@ -98,13 +119,14 @@ export function nomal(prefix: string, ...args: unknown[]): void;
 export function nomal(...args: unknown[]) {
   const prefix = args[0] as string;
   if (args.length === 1) {
-    return _nomal(prefix, "", "all");
+    return _nomal(prefix, "", "normal");
   } else {
     const filename = args[1] as string;
     if (args.length === 2) {
-      return _nomal(prefix, filename, "all");
+      return _nomal(prefix, filename, "normal");
     } else {
-      return _nomal(prefix, filename, "all", args.slice(2));
+      const [...msgs] = args.slice(2);
+      return _nomal(prefix, filename, "normal", ...msgs);
     }
   }
 }
@@ -119,7 +141,8 @@ export function nomalWrite(...args: unknown[]) {
     if (args.length === 2) {
       return _nomal(prefix, filename, "write");
     } else {
-      return _nomal(prefix, filename, "write", args.slice(2));
+      const [...msgs] = args.slice(2);
+      return _nomal(prefix, filename, "write", ...msgs);
     }
   }
 }
@@ -135,7 +158,8 @@ export function nomalConsole(...args: unknown[]) {
     if (args.length === 2) {
       return _nomal(prefix, filename, "console");
     } else {
-      return _nomal(prefix, filename, "console", args.slice(2));
+      const [...msgs] = args.slice(2);
+      return _nomal(prefix, filename, "console", ...msgs);
     }
   }
 }
@@ -145,14 +169,15 @@ export function info(prefix: string, ...args: unknown[]): void;
 export function info(...args: unknown[]) {
   const prefix = args[0] as string;
   if (args.length === 1) {
-    return _info(prefix, "", "all");
+    return _info(prefix, "", "normal");
   } else {
     const filename = args[1] as string;
 
     if (args.length === 2) {
-      return _info(prefix, filename, "all");
+      return _info(prefix, filename, "normal");
     } else {
-      return _info(prefix, filename, "all", args.slice(2));
+      const [...msgs] = args.slice(2);
+      return _info(prefix, filename, "normal", ...msgs);
     }
   }
 }
@@ -167,7 +192,8 @@ export function infoWrite(...args: unknown[]) {
     if (args.length === 2) {
       return _info(prefix, filename, "write");
     } else {
-      return _info(prefix, filename, "write", args.slice(2));
+      const [...msgs] = args.slice(2);
+      return _info(prefix, filename, "write", ...msgs);
     }
   }
 }
@@ -182,7 +208,8 @@ export function infoConsole(...args: unknown[]) {
     if (args.length === 2) {
       return _info(prefix, filename, "console");
     } else {
-      return _info(prefix, filename, "console", args.slice(2));
+      const [...msgs] = args.slice(2);
+      return _info(prefix, filename, "console", ...msgs);
     }
   }
 }
