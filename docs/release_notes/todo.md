@@ -1,3 +1,3 @@
-- 0.1.3
-  - [ ] modularize utils import
-  - [ ] make color customizeable
+- [ ] modularize utils import
+- [ ] make color customizeable
+  - [ ] defined all ansiCode by default

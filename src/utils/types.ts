@@ -10,7 +10,7 @@ export type BrowserLoggerConfig = {
   mode: "development" | "production";
   logDateFmt: string;
   targetUrl: string | undefined;
-  storage: string | undefined;
+  storagePrefix: string | undefined;
 };
 
 export type BrowserPostBody = {

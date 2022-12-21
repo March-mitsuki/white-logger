@@ -6,19 +6,19 @@ type LoggerMode = "normal" | "string";
 
 let __config__: BrowserLoggerConfig = {
   mode: "development",
-  logDateFmt: "yyyy'-'LL'-'dd HH'-'mm'-'ss Z",
+  logDateFmt: "yyyy'-'LL'-'dd HH':'mm':'ss Z",
   targetUrl: undefined,
-  storage: undefined,
+  storagePrefix: undefined,
 };
 
 const logger = (color: string, level: LoggerLevel, loggerMode: LoggerMode) => {
   return (prefix: string, ...args: unknown[]) => {
-    const { mode, logDateFmt, targetUrl, storage } = __config__;
+    const { mode, logDateFmt, targetUrl, storagePrefix } = __config__;
 
     if (
       mode === "production" &&
       typeof targetUrl === "undefined" &&
-      typeof storage === "undefined"
+      typeof storagePrefix === "undefined"
     ) {
       return;
     }
@@ -62,8 +62,8 @@ const logger = (color: string, level: LoggerLevel, loggerMode: LoggerMode) => {
         console.log("fetch error.");
       });
     }
-    if (mode === "production" && storage && window && localStorage) {
-      const storagePath = `${storage}/${level}`;
+    if (mode === "production" && storagePrefix && window && localStorage) {
+      const storagePath = `${storagePrefix}/${level}`;
       localStorage.setItem(storagePath, normalStr);
     }
 

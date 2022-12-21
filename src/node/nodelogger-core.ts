@@ -10,7 +10,7 @@ type LoggerMode = "normal" | "console" | "write" | "string";
 
 let __config__: NodeLoggerConfig = {
   logPath: undefined,
-  logDateFmt: "yyyy'-'LL'-'dd HH'-'mm'-'ss Z",
+  logDateFmt: "yyyy'-'LL'-'dd HH':'mm':'ss Z",
   filenameDateFmt: "yyyy'-'LL'-'dd",
 };
 
