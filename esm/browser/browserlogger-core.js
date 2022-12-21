@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { replacer } from "../utils/replacer";
+import { parseMsgs, replacer } from "../utils/replacer";
 let __config__ = {
     mode: "development",
     logDateFmt: "yyyy'-'LL'-'dd HH':'mm':'ss Z",
@@ -7,49 +7,43 @@ let __config__ = {
     storagePrefix: undefined,
 };
 const logger = (color, level, loggerMode) => {
-    return (prefix, ...args) => {
+    return (prefix, ...msgs) => {
         const { mode, logDateFmt, targetUrl, storagePrefix } = __config__;
         if (mode === "production" &&
             typeof targetUrl === "undefined" &&
             typeof storagePrefix === "undefined") {
             return;
         }
-        const parsedArgs = args
-            .map((elem) => {
-            if (elem instanceof Object) {
-                return JSON.stringify(elem, replacer(), 2);
-            }
-            else if (typeof elem === "string") {
-                return elem;
-            }
-            else {
-                return JSON.stringify(elem);
-            }
-        })
-            .join(` `);
         const logDateStr = DateTime.now().toFormat(logDateFmt);
-        const normalStr = `[${prefix}]-[${logDateStr}] ${parsedArgs}`;
-        if (loggerMode === "string") {
-            return `(${level})${normalStr}`;
+        if (loggerMode === "string" || mode === "development") {
+            const parsedMsgs = parseMsgs(...msgs);
+            const parsedStr = `[${prefix}]-[${logDateStr}] ${parsedMsgs}`;
+            if (loggerMode === "string") {
+                return `(${level})${parsedStr}`;
+            }
+            if (mode === "development") {
+                console.log(`%c[${prefix}]%c %c${logDateStr}%c ${parsedMsgs}`, `color: ${color}; font-weight: bold;`, "", "color: gray;", "");
+            }
         }
-        if (mode === "development") {
-            console.log(`%c[${prefix}]%c %c${logDateStr}%c ${parsedArgs}`, `color: ${color}; font-weight: bold;`, "", "color: gray;", "");
-        }
-        if (mode === "production" && targetUrl) {
+        if (mode === "production") {
             const body = {
                 level: level,
-                msg: normalStr,
+                prefix: prefix,
+                msg: msgs,
             };
-            fetch(targetUrl, {
-                method: "POST",
-                body: JSON.stringify(body),
-            }).catch(() => {
-                console.log("fetch error.");
-            });
-        }
-        if (mode === "production" && storagePrefix && window && localStorage) {
-            const storagePath = `${storagePrefix}/${level}`;
-            localStorage.setItem(storagePath, normalStr);
+            if (targetUrl) {
+                fetch(targetUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body, replacer()),
+                }).catch(() => {
+                    console.log("fetch error.");
+                });
+            }
+            if (storagePrefix && typeof window !== "undefined") {
+                const storagePath = `${storagePrefix}/${level}`;
+                localStorage.setItem(storagePath, JSON.stringify(body, replacer()));
+            }
         }
         return;
     };

@@ -6,7 +6,7 @@ configNodeLogger({
 });
 
 // configLogger({
-//   logPath: path.resolve(process.cwd(), "logs"),
+//   logPath: path.resolve(process.cwd(), "__test__/output"),
 // });
 
 type AnyDict = { [key: string]: any }; // eslint-disable-line
@@ -19,7 +19,7 @@ export const circularRef: AnyDict = {
 circularRef.bar.foo = "foo"; // eslint-disable-line
 circularRef.bar.baz = circularRef; // eslint-disable-line
 
-logger.normal("nomal");
+logger.normal("nomal", circularRef);
 logger.err("oops", __filename, "circular use here:", circularRef);
 logger.warn("notice", "some notice here", { a: "a", b: "b" });
 logger.normal("nomal", "some notice here", { a: "a", b: "b" });

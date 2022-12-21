@@ -2,6 +2,7 @@ import { browserlogger as logger, configBrowserLogger } from "../../esm/browser"
 
 configBrowserLogger({
   mode: "production",
+  targetUrl: "http://127.0.0.1:3274/log",
 });
 
 type AnyDict = { [key: string]: any }; // eslint-disable-line

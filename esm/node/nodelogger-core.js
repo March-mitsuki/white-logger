@@ -2,49 +2,42 @@ import { writeFile } from "fs/promises";
 import { DateTime } from "luxon";
 import path from "path";
 import { ansiFont, ansiBack } from "../utils/ansicode";
-import { replacer } from "../utils/replacer";
+import { parseMsgs } from "../utils/replacer";
 let __config__ = {
     logPath: undefined,
     logDateFmt: "yyyy'-'LL'-'dd HH':'mm':'ss Z",
     filenameDateFmt: "yyyy'-'LL'-'dd",
 };
-const logger = (backColor, level, mode) => {
+const logger = (backColor, level, loggerMode) => {
     return (prefix, filename, ...msgs) => {
         const { logPath, logDateFmt, filenameDateFmt } = __config__;
         let filePath = "";
-        const filenameMatching = filename.match(/(.*\/.*\..*)\s?/);
-        if (filenameMatching) {
-            filePath = path.relative(process.cwd(), filenameMatching[1]);
+        if (typeof filename === "string") {
+            const filenameMatching = filename.match(/(.*\/.*\..*)\s?/);
+            if (filenameMatching) {
+                filePath = path.relative(process.cwd(), filenameMatching[1]);
+            }
+            else {
+                msgs = [filename, ...msgs];
+            }
         }
         else {
             msgs = [filename, ...msgs];
         }
-        const parsedMsgs = msgs
-            .map((elem) => {
-            if (elem instanceof Object) {
-                return JSON.stringify(elem, replacer(), 2);
-            }
-            else if (typeof elem === "string") {
-                return elem;
-            }
-            else {
-                return JSON.stringify(elem);
-            }
-        })
-            .join(` `);
+        const parsedMsgs = parseMsgs(...msgs);
         const logDateStr = DateTime.now().toFormat(logDateFmt);
         const colorizedStr = `${backColor} ${prefix} ${ansiFont.reset}` +
             ` ${ansiFont.fontBold}${ansiFont.brightBlack}${logDateStr}${ansiFont.reset}` +
             ` ${parsedMsgs}` +
             ` ${ansiFont.underLine}${filePath}${ansiFont.reset}`;
         const normalStr = `[${prefix}]-[${logDateStr}] ${parsedMsgs}`;
-        if (mode === "string") {
+        if (loggerMode === "string") {
             return `(${level})${normalStr}`;
         }
-        if (mode === "normal" || mode === "console") {
+        if (loggerMode === "normal" || loggerMode === "console") {
             console.log(colorizedStr);
         }
-        if (mode === "normal" || mode === "write") {
+        if (loggerMode === "normal" || loggerMode === "write") {
             if (logPath) {
                 const filenameDate = DateTime.now().toFormat(filenameDateFmt);
                 const logFilePath = `${filenameDate}_${level}.log`;

@@ -12,6 +12,7 @@ export type BrowserLoggerConfig = {
 };
 export type BrowserPostBody = {
     level: string;
-    msg: string;
+    prefix: string;
+    msg: unknown;
 };
 //# sourceMappingURL=types.d.ts.map

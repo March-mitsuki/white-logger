@@ -15,3 +15,5 @@
     - change
       - Change `configLogger` to `configNodeLogger`
       - Add a level text to `sInfo` return string.
+    - fix
+      - A error will thorwed if pass a object as the second parameter.

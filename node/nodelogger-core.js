@@ -14,43 +14,36 @@ let __config__ = {
     logDateFmt: "yyyy'-'LL'-'dd HH':'mm':'ss Z",
     filenameDateFmt: "yyyy'-'LL'-'dd",
 };
-const logger = (backColor, level, mode) => {
+const logger = (backColor, level, loggerMode) => {
     return (prefix, filename, ...msgs) => {
         const { logPath, logDateFmt, filenameDateFmt } = __config__;
         let filePath = "";
-        const filenameMatching = filename.match(/(.*\/.*\..*)\s?/);
-        if (filenameMatching) {
-            filePath = path_1.default.relative(process.cwd(), filenameMatching[1]);
+        if (typeof filename === "string") {
+            const filenameMatching = filename.match(/(.*\/.*\..*)\s?/);
+            if (filenameMatching) {
+                filePath = path_1.default.relative(process.cwd(), filenameMatching[1]);
+            }
+            else {
+                msgs = [filename, ...msgs];
+            }
         }
         else {
             msgs = [filename, ...msgs];
         }
-        const parsedMsgs = msgs
-            .map((elem) => {
-            if (elem instanceof Object) {
-                return JSON.stringify(elem, (0, replacer_1.replacer)(), 2);
-            }
-            else if (typeof elem === "string") {
-                return elem;
-            }
-            else {
-                return JSON.stringify(elem);
-            }
-        })
-            .join(` `);
+        const parsedMsgs = (0, replacer_1.parseMsgs)(...msgs);
         const logDateStr = luxon_1.DateTime.now().toFormat(logDateFmt);
         const colorizedStr = `${backColor} ${prefix} ${ansicode_1.ansiFont.reset}` +
             ` ${ansicode_1.ansiFont.fontBold}${ansicode_1.ansiFont.brightBlack}${logDateStr}${ansicode_1.ansiFont.reset}` +
             ` ${parsedMsgs}` +
             ` ${ansicode_1.ansiFont.underLine}${filePath}${ansicode_1.ansiFont.reset}`;
         const normalStr = `[${prefix}]-[${logDateStr}] ${parsedMsgs}`;
-        if (mode === "string") {
+        if (loggerMode === "string") {
             return `(${level})${normalStr}`;
         }
-        if (mode === "normal" || mode === "console") {
+        if (loggerMode === "normal" || loggerMode === "console") {
             console.log(colorizedStr);
         }
-        if (mode === "normal" || mode === "write") {
+        if (loggerMode === "normal" || loggerMode === "write") {
             if (logPath) {
                 const filenameDate = luxon_1.DateTime.now().toFormat(filenameDateFmt);
                 const logFilePath = `${filenameDate}_${level}.log`;
