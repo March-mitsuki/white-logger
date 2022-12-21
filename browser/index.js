@@ -23,5 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.browserlogger = void 0;
-exports.browserlogger = __importStar(require("./browserlogger"));
+exports.configBrowserLogger = exports.browserlogger = void 0;
+exports.browserlogger = __importStar(require("./browserlogger-core"));
+var browserlogger_core_1 = require("./browserlogger-core");
+Object.defineProperty(exports, "configBrowserLogger", { enumerable: true, get: function () { return browserlogger_core_1.configBrowserLogger; } });

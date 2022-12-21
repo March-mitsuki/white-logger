@@ -4,24 +4,18 @@ import path from "path";
 
 import { ansiFont, ansiBack } from "../utils/ansicode";
 import { replacer } from "../utils/replacer";
-import { ZerologgerConfig } from "../utils/types";
+import { LoggerLevel, NodeLoggerConfig } from "../utils/types";
 
-type LogLevel = "err" | "warn" | "info" | "nomal";
 type LoggerMode = "normal" | "console" | "write" | "string";
 
-let __config__: ZerologgerConfig = {
+let __config__: NodeLoggerConfig = {
   logPath: undefined,
   logDateFmt: "yyyy'-'LL'-'dd HH'-'mm'-'ss Z",
   filenameDateFmt: "yyyy'-'LL'-'dd",
 };
 
-const logger = (backColor: ansiBack, level: LogLevel) => {
-  return (
-    prefix: string,
-    filename: string,
-    mode: LoggerMode,
-    ...msgs: unknown[]
-  ): string | void => {
+const logger = (backColor: ansiBack, level: LoggerLevel, mode: LoggerMode) => {
+  return (prefix: string, filename: string, ...msgs: unknown[]): string | void => {
     const { logPath, logDateFmt, filenameDateFmt } = __config__;
 
     let filePath = "";
@@ -45,37 +39,23 @@ const logger = (backColor: ansiBack, level: LogLevel) => {
       .join(` `);
 
     const logDateStr = DateTime.now().toFormat(logDateFmt);
-    const coloredStr =
+    const colorizedStr =
       `${backColor} ${prefix} ${ansiFont.reset}` +
       ` ${ansiFont.fontBold}${ansiFont.brightBlack}${logDateStr}${ansiFont.reset}` +
       ` ${parsedMsgs}` +
       ` ${ansiFont.underLine}${filePath}${ansiFont.reset}`;
-    const normalStr = `[${prefix}]-[${logDateStr}] ${parsedMsgs}\n`;
+    const normalStr = `[${prefix}]-[${logDateStr}] ${parsedMsgs}`;
 
     if (mode === "string") {
-      return normalStr;
+      return `(${level})${normalStr}`;
     }
     if (mode === "normal" || mode === "console") {
-      console.log(coloredStr);
+      console.log(colorizedStr);
     }
     if (mode === "normal" || mode === "write") {
       if (logPath) {
         const filenameDate = DateTime.now().toFormat(filenameDateFmt);
-        let logFilePath = `${filenameDate}.log`;
-        switch (level) {
-          case "err":
-            logFilePath = `${filenameDate}_err.log`;
-            break;
-          case "warn":
-            logFilePath = `${filenameDate}_warn.log`;
-            break;
-          case "nomal":
-            logFilePath = `${filenameDate}_nomal.log`;
-            break;
-          case "info":
-            logFilePath = `${filenameDate}_info.log`;
-            break;
-        }
+        const logFilePath = `${filenameDate}_${level}.log`;
 
         let writePath: string | undefined;
         const fullPathReg = /^\//;
@@ -85,7 +65,7 @@ const logger = (backColor: ansiBack, level: LogLevel) => {
           writePath = path.resolve(process.cwd(), logPath, logFilePath);
         }
 
-        writeFile(writePath, normalStr, {
+        writeFile(writePath, normalStr + "\n", {
           flag: "a",
         }).catch((err) => {
           console.log(`[${ansiFont.red}writeLogToFile${ansiFont.reset}]`, err);
@@ -96,7 +76,7 @@ const logger = (backColor: ansiBack, level: LogLevel) => {
   };
 };
 
-export const configLogger = (config: Partial<ZerologgerConfig>) => {
+export const configNodeLogger = (config: Partial<NodeLoggerConfig>) => {
   __config__ = {
     ...__config__,
     ...config,
@@ -104,7 +84,37 @@ export const configLogger = (config: Partial<ZerologgerConfig>) => {
   return;
 };
 
-export const _err = logger(ansiBack.red, "err");
-export const _warn = logger(ansiBack.yellow, "warn");
-export const _nomal = logger(ansiBack.green, "nomal");
-export const _info = logger(ansiBack.blue, "info");
+// prettier-ignore
+type SetReturnType<F extends (...args: any) => any, R> = F extends (...args: any) => any ? (...args: Parameters<F>) => R : never; // eslint-disable-line @typescript-eslint/no-explicit-any
+
+export const _err = logger(ansiBack.red, "err", "normal");
+export const _err_c = logger(ansiBack.red, "err", "console");
+export const _err_w = logger(ansiBack.red, "err", "write");
+export const _err_s = logger(ansiBack.red, "err", "string") as SetReturnType<
+  ReturnType<typeof logger>,
+  string
+>;
+
+export const _warn = logger(ansiBack.yellow, "warn", "normal");
+export const _warn_c = logger(ansiBack.yellow, "warn", "console");
+export const _warn_w = logger(ansiBack.yellow, "warn", "write");
+export const _warn_s = logger(ansiBack.yellow, "warn", "string") as SetReturnType<
+  ReturnType<typeof logger>,
+  string
+>;
+
+export const _normal = logger(ansiBack.green, "normal", "normal");
+export const _normal_c = logger(ansiBack.yellow, "normal", "console");
+export const _normal_w = logger(ansiBack.yellow, "normal", "write");
+export const _normal_s = logger(ansiBack.yellow, "normal", "string") as SetReturnType<
+  ReturnType<typeof logger>,
+  string
+>;
+
+export const _info = logger(ansiBack.blue, "info", "normal");
+export const _info_c = logger(ansiBack.blue, "info", "console");
+export const _info_w = logger(ansiBack.blue, "info", "write");
+export const _info_s = logger(ansiBack.blue, "info", "string") as SetReturnType<
+  ReturnType<typeof logger>,
+  string
+>;

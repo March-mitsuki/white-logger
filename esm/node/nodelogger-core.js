@@ -8,8 +8,8 @@ let __config__ = {
     logDateFmt: "yyyy'-'LL'-'dd HH'-'mm'-'ss Z",
     filenameDateFmt: "yyyy'-'LL'-'dd",
 };
-const logger = (backColor, level) => {
-    return (prefix, filename, mode, ...msgs) => {
+const logger = (backColor, level, mode) => {
+    return (prefix, filename, ...msgs) => {
         const { logPath, logDateFmt, filenameDateFmt } = __config__;
         let filePath = "";
         const filenameMatching = filename.match(/(.*\/.*\..*)\s?/);
@@ -33,35 +33,21 @@ const logger = (backColor, level) => {
         })
             .join(` `);
         const logDateStr = DateTime.now().toFormat(logDateFmt);
-        const coloredStr = `${backColor} ${prefix} ${ansiFont.reset}` +
+        const colorizedStr = `${backColor} ${prefix} ${ansiFont.reset}` +
             ` ${ansiFont.fontBold}${ansiFont.brightBlack}${logDateStr}${ansiFont.reset}` +
             ` ${parsedMsgs}` +
             ` ${ansiFont.underLine}${filePath}${ansiFont.reset}`;
-        const normalStr = `[${prefix}]-[${logDateStr}] ${parsedMsgs}\n`;
+        const normalStr = `[${prefix}]-[${logDateStr}] ${parsedMsgs}`;
         if (mode === "string") {
-            return normalStr;
+            return `(${level})${normalStr}`;
         }
         if (mode === "normal" || mode === "console") {
-            console.log(coloredStr);
+            console.log(colorizedStr);
         }
         if (mode === "normal" || mode === "write") {
             if (logPath) {
                 const filenameDate = DateTime.now().toFormat(filenameDateFmt);
-                let logFilePath = `${filenameDate}.log`;
-                switch (level) {
-                    case "err":
-                        logFilePath = `${filenameDate}_err.log`;
-                        break;
-                    case "warn":
-                        logFilePath = `${filenameDate}_warn.log`;
-                        break;
-                    case "nomal":
-                        logFilePath = `${filenameDate}_nomal.log`;
-                        break;
-                    case "info":
-                        logFilePath = `${filenameDate}_info.log`;
-                        break;
-                }
+                const logFilePath = `${filenameDate}_${level}.log`;
                 let writePath;
                 const fullPathReg = /^\//;
                 if (fullPathReg.test(logPath)) {
@@ -70,7 +56,7 @@ const logger = (backColor, level) => {
                 else {
                     writePath = path.resolve(process.cwd(), logPath, logFilePath);
                 }
-                writeFile(writePath, normalStr, {
+                writeFile(writePath, normalStr + "\n", {
                     flag: "a",
                 }).catch((err) => {
                     console.log(`[${ansiFont.red}writeLogToFile${ansiFont.reset}]`, err);
@@ -80,14 +66,26 @@ const logger = (backColor, level) => {
         return;
     };
 };
-export const configLogger = (config) => {
+export const configNodeLogger = (config) => {
     __config__ = {
         ...__config__,
         ...config,
     };
     return;
 };
-export const _err = logger(ansiBack.red, "err");
-export const _warn = logger(ansiBack.yellow, "warn");
-export const _nomal = logger(ansiBack.green, "nomal");
-export const _info = logger(ansiBack.blue, "info");
+export const _err = logger(ansiBack.red, "err", "normal");
+export const _err_c = logger(ansiBack.red, "err", "console");
+export const _err_w = logger(ansiBack.red, "err", "write");
+export const _err_s = logger(ansiBack.red, "err", "string");
+export const _warn = logger(ansiBack.yellow, "warn", "normal");
+export const _warn_c = logger(ansiBack.yellow, "warn", "console");
+export const _warn_w = logger(ansiBack.yellow, "warn", "write");
+export const _warn_s = logger(ansiBack.yellow, "warn", "string");
+export const _normal = logger(ansiBack.green, "normal", "normal");
+export const _normal_c = logger(ansiBack.yellow, "normal", "console");
+export const _normal_w = logger(ansiBack.yellow, "normal", "write");
+export const _normal_s = logger(ansiBack.yellow, "normal", "string");
+export const _info = logger(ansiBack.blue, "info", "normal");
+export const _info_c = logger(ansiBack.blue, "info", "console");
+export const _info_w = logger(ansiBack.blue, "info", "write");
+export const _info_s = logger(ansiBack.blue, "info", "string");

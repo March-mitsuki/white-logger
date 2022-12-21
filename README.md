@@ -2,6 +2,10 @@
 
 A very simple nodejs and browser logger with only one dependency.
 
+🚧 NOTICE: white-logger is currently in beta. There may be frequent updates that are not backwards compatible. Please keep an eye on our [update docs](docs/release_notes/updates.md).
+
+We expect to release a stable version of 1.0.0 in 02/2023.
+
 # feature
 
 - Only one dependency. Use [Luxon](https://moment.github.io/luxon/#/) for dealing with dates and times.
@@ -24,7 +28,7 @@ npm i white-logger
 ```typescript
 import { nodelogger as logger } from "white-logger/node";
 
-logger.nomal("nomal-level", "normal reported.");
+logger.normal("normal-level", "normal reported.");
 logger.info("info here", "something reported.", {
   hello: "world",
 });
@@ -65,7 +69,7 @@ logger.info("some-info", "something reported.");
 
 **Depending on the level, the logs will be written to different files.**
 
-- `logger.nomal` will write to `<timestamp>_nomal.log`
+- `logger.normal` will write to `<timestamp>_normal.log`
 - `logger.info` will write to `<timestamp>_info.log`
 - `logger.warn` will write to `<timestamp>_warn.log`
 - `logger.err` will write to `<timestamp>_err.log`
@@ -75,7 +79,7 @@ Timestamp will change from day to day. So, the logs are output to a different fi
 You can also only pass a relative path, white-logger will resolve it to your project root directory automatically.
 
 ```typescript
-configLogger({
+configNodeLogger({
   // Same as above, logs will write to <project_root_dir>/logs
   logPath: "logs",
 });
@@ -86,7 +90,7 @@ configLogger({
 ```javascript
 const { nodelogger } = require("white-logger/node");
 
-nodelogger.nomal("nomal-level", "normal reported.");
+nodelogger.normal("normal-level", "normal reported.");
 ```
 
 You can also import with a name of your choice.
@@ -94,7 +98,7 @@ You can also import with a name of your choice.
 ```javascript
 const mylogger = require("white-logger/node").nodelogger;
 
-mylogger.nomal("nomal-level", "normal reported.");
+mylogger.normal("normal-level", "normal reported.");
 ```
 
 ---
@@ -107,7 +111,7 @@ You can use white-logger in any framework. Like vue or react.
 // Please note that the esm module is in esm directory.
 import { browserlogger as logger } from "white-logger/esm/browser";
 
-logger.nomal("nomal-level", "normal reported.");
+logger.normal("normal-level", "normal reported.");
 logger.info("info here", "something reported.", {
   hello: "world",
 });

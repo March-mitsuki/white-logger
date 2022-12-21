@@ -1,2 +1,2 @@
 export * as nodelogger from "./nodelogger";
-export { configLogger } from "./nodelogger-core";
+export { configNodeLogger } from "./nodelogger-core";

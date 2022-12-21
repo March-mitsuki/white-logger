@@ -1,0 +1,3 @@
+- 0.1.3
+  - [ ] modularize utils import
+  - [ ] make color customizeable

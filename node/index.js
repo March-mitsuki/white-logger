@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.configLogger = exports.nodelogger = void 0;
+exports.configNodeLogger = exports.nodelogger = void 0;
 exports.nodelogger = __importStar(require("./nodelogger"));
 var nodelogger_core_1 = require("./nodelogger-core");
-Object.defineProperty(exports, "configLogger", { enumerable: true, get: function () { return nodelogger_core_1.configLogger; } });
+Object.defineProperty(exports, "configNodeLogger", { enumerable: true, get: function () { return nodelogger_core_1.configNodeLogger; } });
