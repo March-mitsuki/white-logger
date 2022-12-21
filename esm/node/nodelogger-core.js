@@ -5,7 +5,7 @@ import { ansiFont, ansiBack } from "../utils/ansicode";
 import { replacer } from "../utils/replacer";
 let __config__ = {
     logPath: undefined,
-    logDateFmt: "yyyy'-'LL'-'dd HH'-'mm'-'ss Z",
+    logDateFmt: "yyyy'-'LL'-'dd HH':'mm':'ss Z",
     filenameDateFmt: "yyyy'-'LL'-'dd",
 };
 const logger = (backColor, level, mode) => {

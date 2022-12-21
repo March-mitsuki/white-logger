@@ -11,7 +11,7 @@ const ansicode_1 = require("../utils/ansicode");
 const replacer_1 = require("../utils/replacer");
 let __config__ = {
     logPath: undefined,
-    logDateFmt: "yyyy'-'LL'-'dd HH'-'mm'-'ss Z",
+    logDateFmt: "yyyy'-'LL'-'dd HH':'mm':'ss Z",
     filenameDateFmt: "yyyy'-'LL'-'dd",
 };
 const logger = (backColor, level, mode) => {

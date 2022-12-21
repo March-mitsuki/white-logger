@@ -2,16 +2,16 @@ import { DateTime } from "luxon";
 import { replacer } from "../utils/replacer";
 let __config__ = {
     mode: "development",
-    logDateFmt: "yyyy'-'LL'-'dd HH'-'mm'-'ss Z",
+    logDateFmt: "yyyy'-'LL'-'dd HH':'mm':'ss Z",
     targetUrl: undefined,
-    storage: undefined,
+    storagePrefix: undefined,
 };
 const logger = (color, level, loggerMode) => {
     return (prefix, ...args) => {
-        const { mode, logDateFmt, targetUrl, storage } = __config__;
+        const { mode, logDateFmt, targetUrl, storagePrefix } = __config__;
         if (mode === "production" &&
             typeof targetUrl === "undefined" &&
-            typeof storage === "undefined") {
+            typeof storagePrefix === "undefined") {
             return;
         }
         const parsedArgs = args
@@ -47,8 +47,8 @@ const logger = (color, level, loggerMode) => {
                 console.log("fetch error.");
             });
         }
-        if (mode === "production" && storage && window && localStorage) {
-            const storagePath = `${storage}/${level}`;
+        if (mode === "production" && storagePrefix && window && localStorage) {
+            const storagePath = `${storagePrefix}/${level}`;
             localStorage.setItem(storagePath, normalStr);
         }
         return;
