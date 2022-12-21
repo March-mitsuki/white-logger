@@ -140,7 +140,7 @@ By default, browser logger running in development mode.
 - In development mode, browser logger will print log to console.
 - In production mode, will _NOT_ print to console, but will do diffrently depending on the `targetUrl` or `storage` config.
   - If targetUrl defined, browser logger will post log to given url by use fetch api.
-  - If storage defined, browser logger will save log into localStorage with given prefix string. Err level will save into `${prefix}/err`, info level will save into `${prefix}/info` ...etc.
+  - If storage defined, browser logger will save log into localStorage with given prefix string.
   - For more information, please see [this document](docs/browserlogger/index.md).
 
 # configuration
@@ -190,7 +190,7 @@ let __config__: BrowserLoggerConfig = {
 
 About Luxon format string, please see [this Luxon document](https://moment.github.io/luxon/#/formatting?id=table-of-tokens)
 
-- `mode`: browser logger mode. For more information on the differences between the two modes of blogger please see [this document](docs/browserlogger/index.md).
+- `mode`: browser logger mode. For more information on the differences between the two modes of blogger please see [this document](docs/browserlogger/index.md#mode).
 - `logDateFmt`: The format of the date being printed to the console.
 - `targetUrl`: Post url in production mode.
 - `storagePrefix`: localStorage prefix in production mode.
