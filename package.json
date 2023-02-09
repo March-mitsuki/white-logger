@@ -9,7 +9,8 @@
     "browser",
     "node",
     "utils",
-    "esm"
+    "esm",
+    "src"
   ],
   "engines": {
     "node": ">=14"
@@ -21,11 +22,11 @@
     "fmt": "prettier --write ./src/**/*",
     "lint": "eslint ./src/**/*",
     "cleanup": "rm -rf ./browser & rm -rf ./node & rm -rf ./utils & rm -rf ./cjs & rm -rf ./esm",
-    "build": "npm run cleanup && npm run build:cjs & npm run build:esm",
+    "build": "npm run cleanup && npm run build:cjs & npm run build:esm && echo '[info] build done.'",
     "build:cjs": "tsc -p ./tsconfig.cjs.json",
     "build:esm": "tsc -p ./tsconfig.esm.json",
     "prepare": "husky install",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "node ./prepublish.cjs"
   },
   "repository": {
     "type": "git",
