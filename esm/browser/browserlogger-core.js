@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { getTraceBrowser } from "../../src/utils/tracer";
+import { getTraceBrowser } from "../utils/tracer";
 import { parseMsgs, replacer } from "../utils/replacer";
 let __config__ = {
     mode: "development",

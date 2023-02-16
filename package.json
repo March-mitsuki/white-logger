@@ -2,9 +2,9 @@
   "name": "white-logger",
   "version": "0.2.1",
   "description": "a very simple browser and node logger with only one dependency",
-  "main": "lib/node/index.js",
-  "module": "lib/node/index.js",
-  "types": "lib/node/index.d.ts",
+  "main": "node/index.js",
+  "module": "esm/index.js",
+  "types": "node/index.d.ts",
   "files": [
     "browser",
     "node",

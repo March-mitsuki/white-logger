@@ -1,4 +1,6 @@
 // import path from "path";
+// import { nodelogger as logger, configNodeLogger } from "../../src/node";
+
 import { nodelogger as logger, configNodeLogger } from "../../node";
 
 configNodeLogger({

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sInfo = exports.info = exports.sNormal = exports.normal = exports.sWarn = exports.warn = exports.sErr = exports.err = exports.configBrowserLogger = void 0;
 const luxon_1 = require("luxon");
-const tracer_1 = require("../../src/utils/tracer");
+const tracer_1 = require("../utils/tracer");
 const replacer_1 = require("../utils/replacer");
 let __config__ = {
     mode: "development",

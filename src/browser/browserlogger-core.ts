@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
-import { getTraceBrowser } from "../../src/utils/tracer";
-import { BrowserLoggerConfig, BrowserPostBody, LoggerLevel } from "../../src/utils/types";
+import { getTraceBrowser } from "../utils/tracer";
+import { BrowserLoggerConfig, BrowserPostBody, LoggerLevel } from "../utils/types";
 import { parseMsgs, replacer } from "../utils/replacer";
 
 type LoggerMode = "normal" | "string";

@@ -3,7 +3,7 @@ import path from "path";
 import { createFile } from "../utils/filesys";
 import { ansiFont, ansiBack } from "../utils/ansicode";
 import { parseMsgs } from "../utils/replacer";
-import { getTrace } from "../../src/utils/tracer";
+import { getTrace } from "../utils/tracer";
 let __config__ = {
     logPath: undefined,
     logDateFmt: "yyyy'-'LL'-'dd HH':'mm':'ss Z",
