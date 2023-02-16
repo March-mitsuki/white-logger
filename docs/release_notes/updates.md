@@ -1,5 +1,20 @@
 # update log
 
+- *v1.0.0* **BREAKING CHANGE**
+  - Migrate from v0.2.x please check [this doc](../nodelogger/migrate.md#migrate-to-v10x-from-v02x)
+  - nodejs
+    - change
+      - Delete the second param `filename`. Now automatically tracks all calls and prints it.
+        - Auto-tracking will only work on err and warn level. Both development and production mode.
+      - Now will automatically create derectory, if not exists.
+  - browser
+    - add
+      - Add auto-tracking, same as nodejs, it will only work on err and warn level.
+      - But not report to server on production mode.
+
+- v0.2.1
+  - fix commonjs require.
+
 - v0.2.0
   - browser & nodejs
     - change

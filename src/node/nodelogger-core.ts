@@ -1,10 +1,11 @@
 import { DateTime } from "luxon";
 import path from "path";
-import { createFile, getTrance } from "../utils/filesys";
+import { createFile } from "../utils/filesys";
 
 import { ansiFont, ansiBack } from "../utils/ansicode";
 import { parseMsgs } from "../utils/replacer";
 import { LoggerLevel, NodeLoggerConfig } from "../utils/types";
+import { getTrace } from "src/utils/tracer";
 
 type LoggerMode = "normal" | "console" | "write" | "string";
 
@@ -12,23 +13,12 @@ let __config__: NodeLoggerConfig = {
   logPath: undefined,
   logDateFmt: "yyyy'-'LL'-'dd HH':'mm':'ss Z",
   filenameDateFmt: "yyyy'-'LL'-'dd",
+  trace: true,
 };
 
 const logger = (backColor: ansiBack, level: LoggerLevel, loggerMode: LoggerMode) => {
-  return (prefix: string, filename: string | unknown, ...msgs: unknown[]): string | void => {
-    const { logPath, logDateFmt, filenameDateFmt } = __config__;
-
-    let filePath = "";
-    if (typeof filename === "string") {
-      const filenameMatching = filename.match(/(.*\/.*\..*)\s?/);
-      if (filenameMatching) {
-        filePath = path.relative(process.cwd(), filenameMatching[1]);
-      } else {
-        msgs = [filename, ...msgs];
-      }
-    } else {
-      msgs = [filename, ...msgs];
-    }
+  return (prefix: string, ...msgs: unknown[]): string | void => {
+    const { logPath, logDateFmt, filenameDateFmt, trace } = __config__;
 
     const parsedMsgs = parseMsgs(...msgs);
 
@@ -36,18 +26,17 @@ const logger = (backColor: ansiBack, level: LoggerLevel, loggerMode: LoggerMode)
     const colorizedStr =
       `${backColor} ${prefix} ${ansiFont.reset}` +
       ` ${ansiFont.fontBold}${ansiFont.brightBlack}${logDateStr}${ansiFont.reset}` +
-      ` ${parsedMsgs}` +
-      ` ${ansiFont.underLine}${filePath}${ansiFont.reset}`;
+      ` ${parsedMsgs}`;
     const normalStr = `[${prefix}]-[${logDateStr}] ${parsedMsgs}`;
 
     if (loggerMode === "string") {
       return `(${level})${normalStr}`;
     }
     if (loggerMode === "normal" || loggerMode === "console") {
-      if (level === "err") {
-        console.error(colorizedStr, getTrance());
-      } else if (level === "warn") {
-        console.warn(colorizedStr, getTrance());
+      if (level === "err" && trace) {
+        console.error(colorizedStr, getTrace());
+      } else if (level === "warn" && trace) {
+        console.warn(colorizedStr, getTrace());
       } else {
         console.log(colorizedStr);
       }
@@ -65,7 +54,12 @@ const logger = (backColor: ansiBack, level: LoggerLevel, loggerMode: LoggerMode)
           writePath = path.resolve(process.cwd(), logPath, logFilePath);
         }
 
-        createFile(writePath, normalStr + "\n", { flag: "a" });
+        if (level === "err" || level === "warn") {
+          const printStr = normalStr + getTrace({ flag: "p" }) + "\n";
+          createFile(writePath, printStr, { flag: "a" });
+        } else {
+          createFile(writePath, normalStr + "\n", { flag: "a" });
+        }
       }
     }
     return;

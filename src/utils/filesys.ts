@@ -1,7 +1,6 @@
 import fs from "fs/promises";
 import type { Mode, ObjectEncodingOptions, OpenMode } from "fs";
 import type { Abortable } from "events";
-import { ansiFont } from "./ansicode";
 
 export const createFile = (
   path: string,
@@ -29,15 +28,4 @@ export const createFile = (
       console.error("[createFile]", err);
     }
   });
-};
-
-export const getTrance = (): string => {
-  const obj: { stack?: string } = {};
-  Error.captureStackTrace(obj, getTrance);
-  if (!obj.stack) {
-    throw new Error("Can not get trance.");
-  }
-  const stackArr = obj.stack.split("\n").slice(3);
-  obj.stack = ansiFont.brightBlack + "\n" + stackArr.join("\n") + ansiFont.reset;
-  return obj.stack;
 };

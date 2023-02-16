@@ -2,9 +2,9 @@
 
 A very simple nodejs and browser logger with only one dependency.
 
-🚧 NOTICE: white-logger is currently in beta. There may be frequent updates that are not backwards compatible. Please keep an eye on our [update docs](docs/release_notes/updates.md).
+white-logger is now released in statable version 1.0.0
 
-We expect to release a stable version of 1.0.0 in 02/2023.
+And there is a BREAKING CHANGE, please see [this document](./docs/nodelogger/migrate.md) for details.
 
 # feature
 
@@ -40,19 +40,9 @@ You will get like this in your console.
 
 ![log preview img](docs/assets/console_preview.png)
 
-You can also give `__filename` to the second parameter to get relative path output from your project root dir.
+By default, white-logger will automatically tracks all calls and print them. Easy to find out the problem, right?
 
-```typescript
-import { nodelogger as logger } from "white-logger/node";
-
-logger.info("some info", __filename, "i am here!");
-```
-
-And you will get like this. Easy to find out the problem, right?
-
-![filename preview img](docs/assets/filename_preview.png)
-
-By default, white-logger does not write log to files. If you want to do this, please configure some setting like this.
+And white-logger can also automatically output logs to a file. If you want to do this, please configure some setting like this.
 
 ```typescript
 import { nodelogger as logger, configLogger } from "white-logger/node";
@@ -82,6 +72,20 @@ You can also only pass a relative path, white-logger will resolve it to your pro
 configNodeLogger({
   // Same as above, logs will write to <project_root_dir>/logs
   logPath: "logs",
+});
+```
+
+If you config a file output, you will get something like this.
+
+![file output preview](./docs/assets/fileoutput_preview.png)
+
+If you don't want auto-tracking to fill up your entire console, you can also turn it off when in development mode.
+
+```ts
+configNodeLogger({
+  // This will only work on development mode.
+  // In production mode, The trace is forced to be output.
+  trace: false,
 });
 ```
 
@@ -149,9 +153,10 @@ By default, browser logger running in development mode.
 
 ```typescript
 export type NodeLoggerConfig = {
-  logPath: string | undefined; // full or relative path to your logs directory
+  logPath?: string; // full or relative path to your logs directory
   logDateFmt: string; // Luxon format string
   filenameDateFmt: string; // Luxon format string
+  trace?: boolean;
 };
 
 // default value
@@ -159,6 +164,7 @@ let __config__: NodeLoggerConfig = {
   logPath: undefined,
   logDateFmt: "yyyy'-'LL'-'dd HH':'mm':'ss Z",
   filenameDateFmt: "yyyy'-'LL'-'dd",
+  trace: true,
 };
 ```
 
@@ -175,8 +181,9 @@ About Luxon format string, please see [this Luxon document](https://moment.githu
 export type BrowserLoggerConfig = {
   mode: "development" | "production"; // browser logger mode
   logDateFmt: string; // luxon date format string
-  targetUrl: string | undefined; // fetch post url
-  storagePrefix: string | undefined; // localStorage item key prefix
+  targetUrl?: string; // fetch post url
+  storagePrefix?: string; // localStorage item key prefix
+  trace?: boolean;
 };
 
 // default value
@@ -185,6 +192,7 @@ let __config__: BrowserLoggerConfig = {
   logDateFmt: "yyyy'-'LL'-'dd HH':'mm':'ss Z",
   targetUrl: undefined,
   storagePrefix: undefined,
+  trace: true
 };
 ```
 

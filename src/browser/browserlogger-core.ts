@@ -1,5 +1,6 @@
 import { DateTime } from "luxon";
-import { BrowserLoggerConfig, BrowserPostBody, LoggerLevel } from "src/utils/types";
+import { getTraceBrowser } from "../../src/utils/tracer";
+import { BrowserLoggerConfig, BrowserPostBody, LoggerLevel } from "../../src/utils/types";
 import { parseMsgs, replacer } from "../utils/replacer";
 
 type LoggerMode = "normal" | "string";
@@ -9,11 +10,12 @@ let __config__: BrowserLoggerConfig = {
   logDateFmt: "yyyy'-'LL'-'dd HH':'mm':'ss Z",
   targetUrl: undefined,
   storagePrefix: undefined,
+  trace: true,
 };
 
 const logger = (color: string, level: LoggerLevel, loggerMode: LoggerMode) => {
   return (prefix: string, ...msgs: unknown[]) => {
-    const { mode, logDateFmt, targetUrl, storagePrefix } = __config__;
+    const { mode, logDateFmt, targetUrl, storagePrefix, trace } = __config__;
 
     if (
       mode === "production" &&
@@ -33,13 +35,31 @@ const logger = (color: string, level: LoggerLevel, loggerMode: LoggerMode) => {
         return `(${level})${parsedStr}`;
       }
       if (mode === "development") {
-        console.log(
-          `%c[${prefix}]%c %c${logDateStr}%c ${parsedMsgs}`,
-          `color: ${color}; font-weight: bold;`,
-          "",
-          "color: gray;",
-          "",
-        );
+        if (level === "err" && trace) {
+          console.log(
+            `%c[${prefix}]%c %c${logDateStr}%c ${parsedMsgs} ${getTraceBrowser()}`,
+            `color: ${color}; font-weight: bold;`,
+            "",
+            "color: gray;",
+            "",
+          );
+        } else if (level === "warn" && trace) {
+          console.log(
+            `%c[${prefix}]%c %c${logDateStr}%c ${parsedMsgs} ${getTraceBrowser()}`,
+            `color: ${color}; font-weight: bold;`,
+            "",
+            "color: gray;",
+            "",
+          );
+        } else {
+          console.log(
+            `%c[${prefix}]%c %c${logDateStr}%c ${parsedMsgs}`,
+            `color: ${color}; font-weight: bold;`,
+            "",
+            "color: gray;",
+            "",
+          );
+        }
       }
     }
 

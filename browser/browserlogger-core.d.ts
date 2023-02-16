@@ -1,4 +1,4 @@
-import { BrowserLoggerConfig } from "src/utils/types";
+import { BrowserLoggerConfig } from "../../src/utils/types";
 export declare const configBrowserLogger: (config: Partial<BrowserLoggerConfig>) => void;
 export declare const err: (prefix: string, ...msgs: unknown[]) => string | undefined;
 export declare const sErr: (prefix: string, ...msgs: unknown[]) => string | undefined;

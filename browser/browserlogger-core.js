@@ -2,16 +2,18 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sInfo = exports.info = exports.sNormal = exports.normal = exports.sWarn = exports.warn = exports.sErr = exports.err = exports.configBrowserLogger = void 0;
 const luxon_1 = require("luxon");
+const tracer_1 = require("../../src/utils/tracer");
 const replacer_1 = require("../utils/replacer");
 let __config__ = {
     mode: "development",
     logDateFmt: "yyyy'-'LL'-'dd HH':'mm':'ss Z",
     targetUrl: undefined,
     storagePrefix: undefined,
+    trace: true,
 };
 const logger = (color, level, loggerMode) => {
     return (prefix, ...msgs) => {
-        const { mode, logDateFmt, targetUrl, storagePrefix } = __config__;
+        const { mode, logDateFmt, targetUrl, storagePrefix, trace } = __config__;
         if (mode === "production" &&
             typeof targetUrl === "undefined" &&
             typeof storagePrefix === "undefined") {
@@ -25,7 +27,15 @@ const logger = (color, level, loggerMode) => {
                 return `(${level})${parsedStr}`;
             }
             if (mode === "development") {
-                console.log(`%c[${prefix}]%c %c${logDateStr}%c ${parsedMsgs}`, `color: ${color}; font-weight: bold;`, "", "color: gray;", "");
+                if (level === "err" && trace) {
+                    console.log(`%c[${prefix}]%c %c${logDateStr}%c ${parsedMsgs} ${(0, tracer_1.getTraceBrowser)()}`, `color: ${color}; font-weight: bold;`, "", "color: gray;", "");
+                }
+                else if (level === "warn" && trace) {
+                    console.log(`%c[${prefix}]%c %c${logDateStr}%c ${parsedMsgs} ${(0, tracer_1.getTraceBrowser)()}`, `color: ${color}; font-weight: bold;`, "", "color: gray;", "");
+                }
+                else {
+                    console.log(`%c[${prefix}]%c %c${logDateStr}%c ${parsedMsgs}`, `color: ${color}; font-weight: bold;`, "", "color: gray;", "");
+                }
             }
         }
         if (mode === "production") {

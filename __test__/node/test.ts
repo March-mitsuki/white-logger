@@ -3,6 +3,7 @@ import { nodelogger as logger, configNodeLogger } from "../../node";
 
 configNodeLogger({
   logPath: "__test__/output",
+  trace: false,
 });
 
 // configLogger({
@@ -10,7 +11,7 @@ configNodeLogger({
 // });
 
 type AnyDict = { [key: string]: any }; // eslint-disable-line
-export const circularRef: AnyDict = {
+const circularRef: AnyDict = {
   foo: "foo",
   bar: {
     bar: "bar",

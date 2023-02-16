@@ -1,9 +1,10 @@
 export type LoggerLevel = "err" | "warn" | "info" | "normal";
 
 export type NodeLoggerConfig = {
-  logPath: string | undefined;
+  logPath?: string;
   logDateFmt: string;
   filenameDateFmt: string;
+  trace?: boolean;
 };
 
 export type BrowserLoggerConfig = {
@@ -11,6 +12,7 @@ export type BrowserLoggerConfig = {
   logDateFmt: string;
   targetUrl: string | undefined;
   storagePrefix: string | undefined;
+  trace?: boolean;
 };
 
 export type BrowserPostBody = {
