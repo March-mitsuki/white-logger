@@ -5,7 +5,7 @@ import { createFile } from "../utils/filesys";
 import { ansiFont, ansiBack } from "../utils/ansicode";
 import { parseMsgs } from "../utils/replacer";
 import { LoggerLevel, NodeLoggerConfig } from "../utils/types";
-import { getTrace } from "src/utils/tracer";
+import { getTrace } from "../../src/utils/tracer";
 
 type LoggerMode = "normal" | "console" | "write" | "string";
 

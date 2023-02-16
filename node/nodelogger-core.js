@@ -9,7 +9,7 @@ const path_1 = __importDefault(require("path"));
 const filesys_1 = require("../utils/filesys");
 const ansicode_1 = require("../utils/ansicode");
 const replacer_1 = require("../utils/replacer");
-const tracer_1 = require("src/utils/tracer");
+const tracer_1 = require("../../src/utils/tracer");
 let __config__ = {
     logPath: undefined,
     logDateFmt: "yyyy'-'LL'-'dd HH':'mm':'ss Z",
