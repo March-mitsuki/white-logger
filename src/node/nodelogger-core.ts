@@ -1,6 +1,6 @@
-import { writeFile } from "fs/promises";
 import { DateTime } from "luxon";
 import path from "path";
+import { createFile, getTrance } from "../utils/filesys";
 
 import { ansiFont, ansiBack } from "../utils/ansicode";
 import { parseMsgs } from "../utils/replacer";
@@ -44,7 +44,13 @@ const logger = (backColor: ansiBack, level: LoggerLevel, loggerMode: LoggerMode)
       return `(${level})${normalStr}`;
     }
     if (loggerMode === "normal" || loggerMode === "console") {
-      console.log(colorizedStr);
+      if (level === "err") {
+        console.error(colorizedStr, getTrance());
+      } else if (level === "warn") {
+        console.warn(colorizedStr, getTrance());
+      } else {
+        console.log(colorizedStr);
+      }
     }
     if (loggerMode === "normal" || loggerMode === "write") {
       if (logPath) {
@@ -59,11 +65,7 @@ const logger = (backColor: ansiBack, level: LoggerLevel, loggerMode: LoggerMode)
           writePath = path.resolve(process.cwd(), logPath, logFilePath);
         }
 
-        writeFile(writePath, normalStr + "\n", {
-          flag: "a",
-        }).catch((err) => {
-          console.log(`[${ansiFont.red}writeLogToFile${ansiFont.reset}]`, err);
-        });
+        createFile(writePath, normalStr + "\n", { flag: "a" });
       }
     }
     return;

@@ -16,6 +16,7 @@
     "node": ">=14"
   },
   "scripts": {
+    "dev:node": "ts-node -r tsconfig-paths/register ./__test__/__dev__/node.ts",
     "test:browser": "vite",
     "test:node": "ts-node -r tsconfig-paths/register ./__test__/node/test.ts",
     "test:server": "ts-node-dev --respawn --exit-child -- ./__test__/server/test.ts",
