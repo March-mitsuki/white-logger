@@ -1,6 +1,6 @@
 {
   "name": "white-logger",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "a very simple browser and node logger with only one dependency",
   "main": "node/index.js",
   "module": "esm/index.js",
