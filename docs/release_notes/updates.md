@@ -10,7 +10,8 @@
   - browser
     - add
       - Add auto-tracking, same as nodejs, it will only work on err and warn level.
-      - But not report to server on production mode.
+        - But not report trace to server on production mode.
+      - Now browser-logger will send isotime to server on production mode.(If targetUrl is set)
 
 - v0.2.1
   - fix commonjs require.

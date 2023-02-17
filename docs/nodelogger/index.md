@@ -9,6 +9,7 @@ export type NodeLoggerConfig = {
   logPath: string | undefined; // full or relative path to your logs directory
   logDateFmt: string; // Luxon format string
   filenameDateFmt: string; // Luxon format string
+  trace?: boolean;
 };
 
 // default value
@@ -16,6 +17,7 @@ let __config__: NodeLoggerConfig = {
   logPath: undefined,
   logDateFmt: "yyyy'-'LL'-'dd HH':'mm':'ss Z",
   filenameDateFmt: "yyyy'-'LL'-'dd",
+  trace: true;
 };
 ```
 

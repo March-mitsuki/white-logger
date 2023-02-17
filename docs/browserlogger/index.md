@@ -10,6 +10,7 @@ export type BrowserLoggerConfig = {
   logDateFmt: string; // luxon date format string
   targetUrl: string | undefined; // fetch post url
   storagePrefix: string | undefined; // localStorage item key prefix
+  trace?: boolean;
 };
 
 // default value
@@ -18,6 +19,7 @@ let __config__: BrowserLoggerConfig = {
   logDateFmt: "yyyy'-'LL'-'dd HH':'mm':'ss Z",
   targetUrl: undefined,
   storagePrefix: undefined,
+  trace: true;
 };
 ```
 
@@ -36,6 +38,7 @@ let __config__: BrowserLoggerConfig = {
       level: string;
       prefix: string;
       msg: unknown;
+      isotime: string
     };
     ```
   - If `storagePrefix` defined, logger will set item to localStorage.

@@ -16,5 +16,6 @@ export type BrowserPostBody = {
     level: string;
     prefix: string;
     msg: unknown;
+    isotime: string;
 };
 //# sourceMappingURL=types.d.ts.map

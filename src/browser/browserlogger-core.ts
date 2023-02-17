@@ -68,6 +68,7 @@ const logger = (color: string, level: LoggerLevel, loggerMode: LoggerMode) => {
         level: level,
         prefix: prefix,
         msg: msgs,
+        isotime: DateTime.now().toISO(),
       };
       if (targetUrl) {
         fetch(targetUrl, {

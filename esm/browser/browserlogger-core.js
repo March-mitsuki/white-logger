@@ -40,6 +40,7 @@ const logger = (color, level, loggerMode) => {
                 level: level,
                 prefix: prefix,
                 msg: msgs,
+                isotime: DateTime.now().toISO(),
             };
             if (targetUrl) {
                 fetch(targetUrl, {

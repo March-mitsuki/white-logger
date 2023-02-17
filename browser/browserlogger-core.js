@@ -43,6 +43,7 @@ const logger = (color, level, loggerMode) => {
                 level: level,
                 prefix: prefix,
                 msg: msgs,
+                isotime: luxon_1.DateTime.now().toISO(),
             };
             if (targetUrl) {
                 fetch(targetUrl, {
