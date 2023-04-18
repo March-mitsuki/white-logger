@@ -28,13 +28,13 @@ const logger = (color, level, loggerMode) => {
             }
             if (mode === "development") {
                 if (level === "err" && trace) {
-                    console.log(`%c[${prefix}]%c %c${logDateStr}%c ${parsedMsgs} ${(0, tracer_1.getTraceBrowser)()}`, `color: ${color}; font-weight: bold;`, "", "color: gray;", "");
+                    console.log(`%c[${prefix}]%c %c${logDateStr}%c`, `color: ${color}; font-weight: bold;`, "", "color: gray;", "", ...msgs, (0, tracer_1.getTraceBrowser)());
                 }
                 else if (level === "warn" && trace) {
-                    console.log(`%c[${prefix}]%c %c${logDateStr}%c ${parsedMsgs} ${(0, tracer_1.getTraceBrowser)()}`, `color: ${color}; font-weight: bold;`, "", "color: gray;", "");
+                    console.log(`%c[${prefix}]%c %c${logDateStr}%c`, `color: ${color}; font-weight: bold;`, "", "color: gray;", "", ...msgs, (0, tracer_1.getTraceBrowser)());
                 }
                 else {
-                    console.log(`%c[${prefix}]%c %c${logDateStr}%c ${parsedMsgs}`, `color: ${color}; font-weight: bold;`, "", "color: gray;", "");
+                    console.log(`%c[${prefix}]%c %c${logDateStr}%c`, `color: ${color}; font-weight: bold;`, "", "color: gray;", "", ...msgs);
                 }
             }
         }
