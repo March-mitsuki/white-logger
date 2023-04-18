@@ -1,5 +1,10 @@
 # update log
 
+- v1.1.0
+  - browser
+    - change
+      - brwoser logger output follow native browser console output.
+
 - *v1.0.0* **BREAKING CHANGE**
   - Migrate from v0.2.x please check [this doc](../nodelogger/migrate.md#migrate-to-v10x-from-v02x)
   - nodejs
