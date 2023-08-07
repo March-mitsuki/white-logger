@@ -1,0 +1,19 @@
+{
+  "name": "@white-logger/shared",
+  "sideEffects": false,
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/March-mitsuki/white-logger.git",
+    "directory": "packages/shared"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.13"
+  },
+  "scripts": {
+    "build": "rm -rf ./dist && tsc"
+  }
+}

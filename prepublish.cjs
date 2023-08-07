@@ -7,7 +7,7 @@ const resolve = (...pathName) => path.resolve(__dirname, ...pathName);
 const expire = new Date(Date.now());
 expire.setMinutes(expire.getMinutes() - 2);
 
-const checkDirList = ["node", "esm", "browser", "utils"];
+const checkDirList = ["./dist/node", "./dist/esm", "./dist/browser", "./dist/utils"];
 
 checkDirList.forEach((elem) => {
   if (!fileExist(resolve(elem))) {

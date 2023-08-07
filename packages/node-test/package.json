@@ -1,0 +1,12 @@
+{
+  "name": "@white-logger/node-test",
+  "private": true,
+  "scripts": {
+    "test": "node src/common.cjs",
+    "test:esm": "node src/module.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.13",
+    "@white-logger/node": "latest"
+  }
+}

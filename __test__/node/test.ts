@@ -1,16 +1,12 @@
 // import path from "path";
-// import { nodelogger as logger, configNodeLogger } from "../../src/node";
+import { createNodeLogger } from "../../src/node";
 
-import { nodelogger as logger, configNodeLogger } from "../../node";
+// import { nodelogger as logger, configNodeLogger } from "../../node";
 
-configNodeLogger({
+const logger = createNodeLogger({
   logPath: "__test__/output",
   trace: false,
 });
-
-// configLogger({
-//   logPath: path.resolve(process.cwd(), "__test__/output"),
-// });
 
 type AnyDict = { [key: string]: any }; // eslint-disable-line
 const circularRef: AnyDict = {
@@ -22,11 +18,11 @@ const circularRef: AnyDict = {
 circularRef.bar.foo = "foo"; // eslint-disable-line
 circularRef.bar.baz = circularRef; // eslint-disable-line
 
-logger.normal("nomal", circularRef);
+logger.log("log", circularRef);
 logger.err("oops", __filename, "circular use here:", circularRef);
 logger.warn("notice", "some notice here", { a: "a", b: "b" });
-logger.normal("nomal", "some notice here", { a: "a", b: "b" });
+logger.log("log", "some notice here", { a: "a", b: "b" });
 logger.info("info", __filename, "something reported.", "another thing reported.");
 
-const str = logger.sErr("test-string", "no filename");
+const str = logger.string.err("test-string", "no filename");
 console.log("sErr:", str);

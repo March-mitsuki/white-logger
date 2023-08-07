@@ -8,3 +8,5 @@ coverage/
 
 # log to file test dir ignore
 /__test__/output
+
+dist/

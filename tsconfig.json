@@ -3,12 +3,7 @@
     "strict": true,
     "target": "ESNext",
     "module": "CommonJS",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "types": ["node"],
-    "outDir": ".",
-    "noEmit": false
+    "esModuleInterop": true
   },
-  "include": ["./src/**/*", "./__test__/**/*", "./vite.config.ts"],
   "exclude": ["**/node_modules/**"]
 }
