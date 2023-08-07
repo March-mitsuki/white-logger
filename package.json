@@ -37,7 +37,10 @@
   },
   "scripts": {
     "cleanup": "node scripts/cleanup.js",
+    "run:shared": "pnpm --filter @white-logger/shared",
     "run:node": "pnpm --filter @white-logger/node",
-    "run:node-test": "pnpm --filter @white-logger/node-test"
+    "run:browser": "pnpm --filter @white-logger/browser",
+    "run:node-test": "pnpm --filter @white-logger/node-test",
+    "run:browser-test": "pnpm --filter @white-logger/browser-test"
   }
 }

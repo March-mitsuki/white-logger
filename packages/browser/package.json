@@ -2,20 +2,18 @@
   "name": "@white-logger/browser",
   "version": "2.0.0",
   "description": "a very simple node logger with only one dependency",
-  "main": "node/index.js",
-  "module": "esm/index.js",
-  "types": "node/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/esm/index.js",
   "files": [
-    "browser",
-    "node",
-    "utils",
-    "esm",
-    "src"
+    "dist"
   ],
   "engines": {
     "node": ">=14"
   },
-  "scripts": {},
+  "scripts": {
+    "build": "rm -rf dist && tsc && tsc -p tsconfig.esm.json",
+    "build:webpack": "rm -rf dist && webpack --mode production --config webpack.config.ts"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/March-mitsuki/white-logger.git",
@@ -35,10 +33,14 @@
   },
   "homepage": "https://github.com/March-mitsuki/white-logger#readme",
   "devDependencies": {
-    "@types/luxon": "^3.1.0"
+    "@types/luxon": "^3.1.0",
+    "@types/node": "^18.11.13",
+    "ts-loader": "^9.4.4",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "luxon": "^3.1.1",
-    "@white-logger/shared": "latest"
+    "@white-logger/shared": "latest",
+    "luxon": "^3.1.1"
   }
 }

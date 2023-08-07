@@ -1,6 +1,9 @@
 {
   "name": "@white-logger/browser-test",
   "private": true,
+  "scripts": {
+    "dev": "vite"
+  },
   "devDependencies": {
     "express": "^4.18.2",
     "vite": "^4.0.1",
